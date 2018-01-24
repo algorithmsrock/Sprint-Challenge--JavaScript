@@ -32,21 +32,19 @@ const limitFunctionCallCount = (cb, n) => {
 		  cb ();                      //   of how many times cb has been called since the instructions say 
 			count++;                   //   that cb can only be invoked n times. 
   }
-};
-   return limitCall;           // the variable limitCall returns the results of the invoking cb 'n' times    
+    return limitCall;          // the variable limitCall returns the results of the invoking cb 'n' times    
 };
 
 const cacheFunction = cb => {
 	 const Cache = {};
-	 return (input) {
+	 return (input) 
 		 if (Cache.hasOwnProperty(input)) {
 			 return Cache[input];
 		}
 		 else {
 			 return Cache[input] = cb (input);
-		}
-	};
-}
+		}	
+
   // Should return a funciton that invokes `cb`.
   // A cache (object) should be kept in closure scope.
   // The cache should keep track of all arguments have been used to invoke this function.
@@ -84,10 +82,10 @@ const checkMatchingLeaves = obj => {
 }
 };
 
-const flatten = elements => {
+const flatten = (elements) => {
   let flattenarray = [];
-	for (let i = 0; i < elements.length, i++) {
-			if(Array.isArray(elements[i])) {
+	for (let i = 0; i < elements.length; i++){
+			if (Array.isArray(elements[i])) {
 			flattenarray = flattenarray.concat(flatten(elements[i]));
 		}
 		 else {
@@ -107,3 +105,4 @@ module.exports = {
   reverseStr,
   checkMatchingLeaves,
   flatten,
+};
