@@ -28,22 +28,28 @@ const limitFunctionCallCount = (cb, n) => {
   // Should return a function that invokes `cb`.
   // The returned function should only allow `cb` to be invoked `n` times.
     let count = 0;                  // variable count to keep track of how many times cb was invoked. 
-    const limitCall = () => {      //  const limitCall invokes cb and uses the counter to keep track   
-		  cb ();                      //   of how many times cb has been called since the instructions say 
-			count++;                   //   that cb can only be invoked n times. 
+    const limitCall = (...args) => {      //  const limitCall invokes cb and uses the counter to keep track   
+		  if (count === n) {
+	    return null; 
+		}
+		                                       //   of how many times cb has been called since the instructions say 
+			count++;                            //   that cb can only be invoked n times.
+      return cb (...args); 
   }
     return limitCall;          // the variable limitCall returns the results of the invoking cb 'n' times    
 };
 
 const cacheFunction = cb => {
 	 const Cache = {};
-	 return (input) 
-		 if (Cache.hasOwnProperty(input)) {
+	 return (input) => {  
+		 if (Object.prototype.hasOwnProperty.call(Cache, input)) {
 			 return Cache[input];
 		}
 		 else {
-			 return Cache[input] = cb (input);
+			  Cache[input] = cb (input);
+				return Cache[input];
 		}	
+	}
 
   // Should return a funciton that invokes `cb`.
   // A cache (object) should be kept in closure scope.
@@ -59,10 +65,11 @@ const cacheFunction = cb => {
 const reverseStr = str => {
   // reverse str takes in a string and returns that string in reversed order
   // The only difference between the way you've solved this before and now is that you need to do it recursivley!
-     if (str === " ") {    
-			 return " ";
+     if (str === "") {    
+			 return "";
 			}
-		  else return(str.substr(1)) + str.charAt(0); 
+		 else return str.charAt(str.length - 1) + reverseStr (str.substr(0, str.length - 1));
+		 //else return reverseStr (str.substr(0) + str.charAt(1);
 };
 
 const checkMatchingLeaves = obj => {
@@ -71,15 +78,20 @@ const checkMatchingLeaves = obj => {
 	const matchingLeaves = [];
 
    function checkmatches(leaves) {
-    if (!!leaves.children) {
-        for (var child in leaves.children) {
-            checkmatches(leaves.children[child]);
+    if (Object(leaves) === leaves)
+		{
+		 const children = Object.keys(leaves).map (key => leaves [key]);
+     //   children.forEach(child => checkmatches(child));
+		   
+		    for (let i = 0; i < children.length; i++) {
+           checkmatches(children[i]);
         }
     } else {
-        matchingLeaves[matchingLeaves.length] = leaves.id;
+        matchingLeaves.push(leaves);
     }
-    return matchingLeaves;
-}
+	 }	  
+	  checkmatches(obj);	
+	 return matchingLeaves.length === 0 || matchingLeaves.every(leaf => leaf === matchingLeaves[0]);
 };
 
 const flatten = (elements) => {
