@@ -81,11 +81,11 @@ const checkMatchingLeaves = obj => {
     if (Object(leaves) === leaves)
 		{
 		 const children = Object.keys(leaves).map (key => leaves [key]);
-     //   children.forEach(child => checkmatches(child));
+        children.forEach(child => checkmatches(child));
 		   
-		    for (let i = 0; i < children.length; i++) {
-           checkmatches(children[i]);
-        }
+		 //   for (let i = 0; i < children.length; i++) {
+     //      checkmatches(children[i]);
+     //   }
     } else {
         matchingLeaves.push(leaves);
     }
